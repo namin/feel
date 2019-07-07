@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>Sunburst Tutorial (d3 v4), Part 2</title>
+    <title>The Feeling Wheel</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 <style>
@@ -11,6 +11,7 @@ body {
 }
 </style>
 <body>
+    <h1>The Feeling Wheel</h1>
     <svg></svg>
 </body>
 
@@ -67,7 +68,7 @@ body {
             .append("text")
             .attr("transform", function(d) {
                 return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; })
-            .attr("dx", "-50") // radius margin
+            .attr("dx", function(d) { return -d.depth * 22} ) // radius margin
             .attr("dy", ".5em") // rotation align
             .text(function(d) { return d.parent ? d.data.name : "" });
 
