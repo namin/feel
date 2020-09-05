@@ -4,78 +4,86 @@
     {
       "name": "Anger",
       "color": "red",
+      "text": "white",
       "size": 0,
       "children": [
-        {"color": "red", "name": "Irritation", "size": 0, "children": [{"name":"Frustration", "size": 1}]},
-        {"color": "red", "name": "Resentment", "size": 0, "children": [{"name":"Hostility", "size": 1}]},
-        {"color": "red", "name": "Dislike", "size": 0, "children": [{"name":"Hate", "size": 1}]},
-        {"color": "red", "name": "Loathing", "size": 0, "children": [{"name":"Disgust", "size": 1}]},
-        {"color": "red", "name": "Rage", "size": 0, "children": [{"name":"Fury", "size": 1}]},
-        {"color": "red", "name": "Envy", "size": 0, "children": [{"name":"Jealousy", "size": 1}]}
+        {"color": "red",
+          "text": "white",
+          "name": "Irritation", "size": 0, "children": [{"name":"Frustration", "size": 1}]},
+        {"color": "red", "text": "white", "name": "Resentment", "size": 0, "children": [{"name":"Hostility", "size": 1}]},
+        {"color": "red", "text": "white", "name": "Dislike", "size": 0, "children": [{"name":"Hate", "size": 1}]},
+        {"color": "red", "text": "white", "name": "Loathing", "size": 0, "children": [{"name":"Disgust", "size": 1}]},
+        {"color": "red", "text": "white", "name": "Rage", "size": 0, "children": [{"name":"Fury", "size": 1}]},
+        {"color": "red", "text": "white", "name": "Envy", "size": 0, "children": [{"name":"Jealousy", "size": 1}]}
       ]
     },
     {
       "name": "Fear",
       "color": "orange",
+      "text": "white",
       "children": [
-        {"color": "orange", "name": "Apprehension", "size": 0, "children": [{"name":"Anxiety", "size": 1}]},
-        {"color": "orange", "name": "Panic", "size": 0, "children": [{"name":"Overwhelmed", "size": 1}]},
-        {"color": "orange", "name": "Worry", "size": 0, "children": [{"name":"Nervousness", "size": 1}]},
-        {"color": "orange", "name": "Distress", "size": 0, "children": [{"name":"Dread", "size": 1}]},
-        {"color": "orange", "name": "Shock", "size": 0, "children": [{"name":"Horror", "size": 1}]},
-        {"color": "orange", "name": "Tenseness", "size": 0, "children": [{"name":"Fright", "size": 1}]}
+        {"color": "orange", "text": "white", "name": "Apprehension", "size": 0, "children": [{"name":"Anxiety", "size": 1}]},
+        {"color": "orange", "text": "white", "name": "Panic", "size": 0, "children": [{"name":"Overwhelmed", "size": 1}]},
+        {"color": "orange", "text": "white", "name": "Worry", "size": 0, "children": [{"name":"Nervousness", "size": 1}]},
+        {"color": "orange", "text": "white", "name": "Distress", "size": 0, "children": [{"name":"Dread", "size": 1}]},
+        {"color": "orange", "text": "white", "name": "Shock", "size": 0, "children": [{"name":"Horror", "size": 1}]},
+        {"color": "orange", "text": "white", "name": "Tenseness", "size": 0, "children": [{"name":"Fright", "size": 1}]}
       ]
     },
     {
       "name": "Joy",
       "color": "yellow",
+      "text": "white",
       "size": 0,
       "children": [
-        {"color": "yellow", "name": "Satisfaction", "size": 0, "children": [{"name":"Contentment", "size": 1}]},
-        {"color": "yellow", "name": "Excitement", "size": 0, "children": [{"name":"Thrill", "size": 1}]},
-        {"color": "yellow", "name": "Hope", "size": 0, "children": [{"name":"Optimism", "size": 1}]},
-        {"color": "yellow", "name": "Cheerfulness", "size": 0, "children": [{"name":"Happiness", "size": 1}]},
-        {"color": "yellow", "name": "Relief", "size": 0, "children": [{"name":"Enthusiasm", "size": 1}]},
-        {"color": "yellow", "name": "Enjoyment", "size": 0, "children": [{"name":"Triumph", "size": 1}]}
+        {"color": "yellow", "text": "white", "name": "Satisfaction", "size": 0, "children": [{"name":"Contentment", "size": 1}]},
+        {"color": "yellow", "text": "white", "name": "Excitement", "size": 0, "children": [{"name":"Thrill", "size": 1}]},
+        {"color": "yellow", "text": "white", "name": "Hope", "size": 0, "children": [{"name":"Optimism", "size": 1}]},
+        {"color": "yellow", "text": "white", "name": "Cheerfulness", "size": 0, "children": [{"name":"Happiness", "size": 1}]},
+        {"color": "yellow", "text": "white", "name": "Relief", "size": 0, "children": [{"name":"Enthusiasm", "size": 1}]},
+        {"color": "yellow", "text": "white", "name": "Enjoyment", "size": 0, "children": [{"name":"Triumph", "size": 1}]}
       ]
     },
     {
       "name": "Love",
       "color": "green",
+      "text": "white",
       "size": 0,
       "children": [
-        {"color": "green", "name": "Warm", "size": 0, "children": [{"name":"Kindness", "size": 1}]},
-        {"color": "green", "name": "Sympathy", "size": 0, "children": [{"name":"Liking", "size": 1}]},
-        {"color": "green", "name": "Desire", "size": 0, "children": [{"name":"Longing", "size": 1}]},
-        {"color": "green", "name": "Affection", "size": 0, "children": [{"name":"Adoration", "size": 1}]},
-        {"color": "green", "name": "Caring", "size": 0, "children": [{"name":"Compassion", "size": 1}]},
-        {"color": "green", "name": "Lust", "size": 0, "children": [{"name":"Passion", "size": 1}]}
+        {"color": "green", "text": "white", "name": "Warm", "size": 0, "children": [{"name":"Kindness", "size": 1}]},
+        {"color": "green", "text": "white", "name": "Sympathy", "size": 0, "children": [{"name":"Liking", "size": 1}]},
+        {"color": "green", "text": "white", "name": "Desire", "size": 0, "children": [{"name":"Longing", "size": 1}]},
+        {"color": "green", "text": "white", "name": "Affection", "size": 0, "children": [{"name":"Adoration", "size": 1}]},
+        {"color": "green", "text": "white", "name": "Caring", "size": 0, "children": [{"name":"Compassion", "size": 1}]},
+        {"color": "green", "text": "white", "name": "Lust", "size": 0, "children": [{"name":"Passion", "size": 1}]}
       ]
     },
     {
       "name": "Shame",
       "size": 0,
       "color": "blue",
+      "text": "white",
       "children": [
-        {"color": "blue", "name": "Disgrace", "size": 0, "children": [{"name":"Ashamed", "size": 1}]},
-        {"color": "blue", "name": "Apology", "size": 0, "children": [{"name":"Guilt", "size": 1}]},
-        {"color": "blue", "name": "Regret", "size": 0, "children": [{"name":"Remorse", "size": 1}]},
-        {"color": "blue", "name": "Agitation", "size": 0, "children": [{"name":"Humiliation", "size": 1}]},
-        {"color": "blue", "name": "Insult", "size": 0, "children": [{"name":"Blame", "size": 1}]},
-        {"color": "blue", "name": "Embarrassment", "size": 0, "children": [{"name":"Loss of Face", "size": 1}]}
+        {"color": "blue", "text": "white", "name": "Disgrace", "size": 0, "children": [{"name":"Ashamed", "size": 1}]},
+        {"color": "blue", "text": "white", "name": "Apology", "size": 0, "children": [{"name":"Guilt", "size": 1}]},
+        {"color": "blue", "text": "white", "name": "Regret", "size": 0, "children": [{"name":"Remorse", "size": 1}]},
+        {"color": "blue", "text": "white", "name": "Agitation", "size": 0, "children": [{"name":"Humiliation", "size": 1}]},
+        {"color": "blue", "text": "white", "name": "Insult", "size": 0, "children": [{"name":"Blame", "size": 1}]},
+        {"color": "blue", "text": "white", "name": "Embarrassment", "size": 0, "children": [{"name":"Loss of Face", "size": 1}]}
       ]
     },
     {
       "name": "Sadness",
       "size": 0,
       "color": "purple",
+      "text": "white",
       "children": [
-        {"color": "purple", "name": "Unhappiness", "size": 0, "children": [{"name":"Depression", "size": 1}]},
-        {"color": "purple", "name": "Grief", "size": 0, "children": [{"name":"Hurt", "size": 1}]},
-        {"color": "purple", "name": "Disappointment", "size": 0, "children": [{"name":"Hopelessness", "size": 1}]},
-        {"color": "purple", "name": "Insecurity", "size": 0, "children": [{"name":"Isolation", "size": 1}]},
-        {"color": "purple", "name": "Misery", "size": 0, "children": [{"name":"Despair", "size": 1}]},
-        {"color": "purple", "name": "Loneliness", "size": 0, "children": [{"name":"Rejection", "size": 1}]}
+        {"color": "purple", "text": "white", "name": "Unhappiness", "size": 0, "children": [{"name":"Depression", "size": 1}]},
+        {"color": "purple", "text": "white", "name": "Grief", "size": 0, "children": [{"name":"Hurt", "size": 1}]},
+        {"color": "purple", "text": "white", "name": "Disappointment", "size": 0, "children": [{"name":"Hopelessness", "size": 1}]},
+        {"color": "purple", "text": "white", "name": "Insecurity", "size": 0, "children": [{"name":"Isolation", "size": 1}]},
+        {"color": "purple", "text": "white", "name": "Misery", "size": 0, "children": [{"name":"Despair", "size": 1}]},
+        {"color": "purple", "text": "white", "name": "Loneliness", "size": 0, "children": [{"name":"Rejection", "size": 1}]}
       ]
     }
   ]
