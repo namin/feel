@@ -71,9 +71,10 @@ body {
             .append("text")
             .attr("transform", function(d) {
                 return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")"; })
-            .attr("dx", function(d) { return -d.depth * 22} ) // radius margin
+           // .attr("dx", function(d) { return -d.depth * 22} ) // radius margin
             .attr("dy", ".5em") // rotation align
             .text(function(d) { return d.parent ? d.data.name : "" })
+            .style("text-anchor", "middle")
             .attr("fill", textFillColour);
 
         g.attr("transform", "rotate(45)")
@@ -87,7 +88,15 @@ body {
             return "black"
         }
 
+        if (d.depth == 3 && d.parent.data.color === "orange") {
+            return "black"
+        }
+
         if (d.data.color === "yellow") {
+            return "black"
+        }
+
+        if (d.data.color === "orange") {
             return "black"
         }
 
