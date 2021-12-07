@@ -5,10 +5,14 @@
     <script src="data.js"></script>
 </head>
 <style>
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
 body {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.selected {
+  font-weight: bold;
 }
 </style>
 <body>
@@ -23,6 +27,9 @@ body {
     var height = 900;
     var bandSize = 150;
     var radius = Math.min(width, height) / 2;
+
+    var hiColor = 'white';
+    var hiText = 'red';
 
     // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
     var g = d3.select('svg')
@@ -59,9 +66,21 @@ body {
             .enter().append('g').attr("class", "node").append('path')
             .attr("display", function (d) { return d.depth ? null : "none"; })
             .attr("d", arc)
-            .style('stroke', "black")
-            .style("fill", function (d) { return d.data.color; });
-
+            .style("stroke", "black")
+            .style("fill", function (d) { return d.data.color; })
+            .attr("name", function (d) { return d.data.name; })
+            .on("click", function() {
+                var selected = d3.select(this.parentNode).classed("selected");
+                selected = !selected;
+                if (selected) {
+                    d3.select(this).style("fill", function (d) { return hiColor; });
+                    d3.select(this.parentNode).select("text").style("fill", function (d) { return hiText; })
+                } else {
+                    d3.select(this).style("fill", function (d) { return d.data.color; });
+                    d3.select(this.parentNode).select("text").style("fill", function (d) { return d.data.text; })
+                }
+                d3.select(this.parentNode).classed("selected", selected);
+            });
 
         // Populate the <text> elements with our data-driven titles.
         g.selectAll(".node")
@@ -72,7 +91,11 @@ body {
             .attr("dy", ".5em") // rotation align
             .text(function(d) { return d.parent ? d.data.name : "" })
             .style("text-anchor", "middle")
-            .attr("fill", function (d) { return d.data.text; });
+            .attr("fill", function (d) { return d.data.text; })
+            .on("click", function() {
+                d3.select(this.parentNode).select('path').dispatch("click");
+                d3.event.stopPropagation();
+            });
 
         g.attr("transform", "rotate(45)")
          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
