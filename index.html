@@ -28,9 +28,6 @@ body {
     var bandSize = 150;
     var radius = Math.min(width, height) / 2;
 
-    var hiColor = 'white';
-    var hiText = 'red';
-
     // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
     var g = d3.select('svg')
         .attr('width', width)
@@ -72,13 +69,6 @@ body {
             .on("click", function() {
                 var selected = d3.select(this.parentNode).classed("selected");
                 selected = !selected;
-                if (selected) {
-                    d3.select(this).style("fill", function (d) { return hiColor; });
-                    d3.select(this.parentNode).select("text").style("fill", function (d) { return hiText; })
-                } else {
-                    d3.select(this).style("fill", function (d) { return d.data.color; });
-                    d3.select(this.parentNode).select("text").style("fill", function (d) { return d.data.text; })
-                }
                 d3.select(this.parentNode).classed("selected", selected);
             });
 
