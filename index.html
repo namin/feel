@@ -63,7 +63,7 @@ body {
             .attr("display", function (d) { return d.depth ? null : "none"; })
             .attr("d", arc)
             .style('stroke', "black")
-            .style("fill", function (d) { return d.depth == 1 ? d.data.color : (d.depth == 2 ? d.parent.data.color : (d.depth == 3 ? d.parent.data.color : color(d.x1))  ) });
+            .style("fill", function (d) { return d.data.color; });
 
 
         // Populate the <text> elements with our data-driven titles.
@@ -75,34 +75,13 @@ body {
             .attr("dy", ".5em") // rotation align
             .text(function(d) { return d.parent ? d.data.name : "" })
             .style("text-anchor", "middle")
-            .attr("fill", textFillColour);
+            .attr("fill", function (d) { return d.data.text; });
 
         g.attr("transform", "rotate(45)")
          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
     });
 
-    function textFillColour(d) {
-
-        if (d.depth == 3 && d.parent.data.color === "yellow") {
-            return "black"
-        }
-
-        if (d.depth == 3 && d.parent.data.color === "orange") {
-            return "black"
-        }
-
-        if (d.data.color === "yellow") {
-            return "black"
-        }
-
-        if (d.data.color === "orange") {
-            return "black"
-        }
-
-        return "white"
-
-    }
 
     /**
      * Calculate the correct distance to rotate each label based on its location in the sunburst.
