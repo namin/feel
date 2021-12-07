@@ -22,10 +22,6 @@ body {
     var height = 900;
     var bandSize = 150;
     var radius = Math.min(width, height) / 2;
-    // var color = d3.scaleOrdinal(d3.schemeCategory20b);
-    var color = d3.scaleOrdinal()
-    .domain([0, 2 * Math.PI])
-    .range(["red", "orange", "yellow", "green", "blue", "pink"]);
 
     // Size our <svg> element, add a <g> element, and move translate 0,0 to the center of the element.
     var g = d3.select('svg')
