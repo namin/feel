@@ -2,6 +2,7 @@
 <head>
     <title>The Feeling Wheel</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="data.js"></script>
 </head>
 <style>
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -35,8 +36,8 @@ body {
         .size([2 * Math.PI, radius]);
 
     // Get the data from our JSON file
-    d3.json("data.json", function(error, nodeData) {
-        if (error) throw error;
+    //d3.json("data.json", function(error, nodeData) {
+        //if (error) throw error;
 
         // Find the root node of our data, and begin sizing process.
         var root = d3.hierarchy(nodeData)
@@ -76,7 +77,7 @@ body {
         g.attr("transform", "rotate(45)")
          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
-    });
+    //});
 
 
     /**
