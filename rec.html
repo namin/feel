@@ -233,9 +233,14 @@ body {
               values: values
           }).then((response) => {
           }, function(error) {
-              log('insertRow('+spreadsheetId+', ...)')
-              log(JSON.stringify(error, null, 2));
-              // TODO: spreadsheetId could be out of date
+              if (error.result.error.code == 404) {
+                  log('spreadsheet not found, creating anew ...')
+                  localStorage.removeItem(email+'/spreadsheetId');
+                  record();
+              } else {
+                  log('insertRow('+spreadsheetId+', ...)');
+                  log(JSON.stringify(error, null, 2));
+              }
           });
       }
   
