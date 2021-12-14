@@ -204,9 +204,9 @@ body {
 
       function record() {
           var key = email+'/spreadsheetId';
-          var spreadsheetId = undefined;//localStorage.getItem(key);
+          var spreadsheetId = localStorage.getItem(key);
           if (spreadsheetId) {
-              insertRows(spreadsheetId, listState())
+              insertRows(spreadsheetId, [listState()])
           } else {
               // TODO: consider asking the user to input a spreadsheetId, optionally -- perhaps using hash?
               gapi.client.sheets.spreadsheets.create({
