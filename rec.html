@@ -16,9 +16,12 @@ body {
 }
 </style>
 <body>
-    <h1>The Feeling Wheel</h1>
-    <svg></svg>
-</body>
+  <h1>The Feeling Wheel</h1>
+  <button id="authorize_button" style="display: none;">Sign in</button>
+  <button id="signout_button" style="display: none;">Sign out</button>
+  <button id="record_button" style="display: none;">Record</button>
+  <pre id="log" style="white-space: pre-wrap;"></pre>
+  <svg></svg>
 
 <script>
 
@@ -112,4 +115,179 @@ body {
         return (angle < 180) ? angle - 90 : angle + 90;  // labels as spokes
     }
 
+
+      // Client ID and API key from the Developer Console
+      var CLIENT_ID = '45515854863-6imu2cteovr1j804j404auhh70nmlihh.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyCl2kEvCB66YADUGvGi5DFbJ7bPcbbS1aQ';
+
+      // Array of API discovery doc URLs for APIs used
+      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      var SCOPES = "https://www.googleapis.com/auth/drive.file";
+
+      var authorizeButton = document.getElementById('authorize_button');
+      var signoutButton = document.getElementById('signout_button');
+      var recordButton = document.getElementById('record_button');
+
+      /**
+       *  On load, called to load the auth2 library and API client library.
+       */
+      function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
+      }
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        gapi.client.init({
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES
+        }).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          authorizeButton.onclick = handleAuthClick;
+          signoutButton.onclick = handleSignoutClick;
+          recordButton.onclick = handleRecordClick;
+        }, function(error) {
+          log('initClient()')
+          log(JSON.stringify(error, null, 2));
+        });
+      }
+
+      var email;
+      /**
+       *  Called when the signed in status changes, to update the UI
+       *  appropriately. After a sign-in, the API is called.
+       */
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          authorizeButton.style.display = 'none';
+          signoutButton.style.display = 'inline-block';
+          recordButton.style.display = 'inline-block';
+          var auth2 = gapi.auth2.getAuthInstance();
+          var profile = auth2.currentUser.get().getBasicProfile();
+          email = profile.getEmail();
+        } else {
+          authorizeButton.style.display = 'inline-block';
+          signoutButton.style.display = 'none';
+          recordButton.style.display = 'none';
+          email = undefined;  
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+      }
+
+      function handleRecordClick(event) {
+          record();
+      }
+
+      function record() {
+          var key = email+'/spreadsheetId';
+          var spreadsheetId = undefined;//localStorage.getItem(key);
+          if (spreadsheetId) {
+              insertRows(spreadsheetId, listState())
+          } else {
+              // TODO: consider asking the user to input a spreadsheetId, optionally -- perhaps using hash?
+              gapi.client.sheets.spreadsheets.create({
+                  properties: {
+                      title: "feel.metareflection.club"
+                  }
+              }).then((response) => {
+                  spreadsheetId = response.result.spreadsheetId;
+                  localStorage.setItem(key, spreadsheetId);
+                  insertRows(spreadsheetId, [listHeader(), listState()])
+              })
+          }
+      }
+  
+      function insertRows(spreadsheetId, values) {
+          gapi.client.sheets.spreadsheets.values.append({
+              spreadsheetId: spreadsheetId,
+              range: 'Sheet1',
+              valueInputOption: 'USER_ENTERED',
+              insertDataOption: 'INSERT_ROWS'
+          }, {
+              range: 'Sheet1',
+              majorDimension: 'ROWS',
+              values: values
+          }).then((response) => {
+          }, function(error) {
+              log('insertRow('+spreadsheetId+', ...)')
+              log(JSON.stringify(error, null, 2));
+              // TODO: spreadsheetId could be out of date
+          });
+      }
+  
+      function listHeader(spreadsheetId) {
+          values = ['Date', 'Date']
+          g.selectAll('g')
+              .data(root.descendants())
+              .each(function (d) {
+                  id = d.data.id
+                  if (id) {
+                      values.push(id)
+                  }
+              })
+          return values;
+      }
+  
+      function listState(spreadsheetId) {
+          values = [Date(), Date.now()]
+          g.selectAll('g')
+              .data(root.descendants())
+              .each(function (d) {
+                  id = d.data.id
+                  if (id) {
+                      if (localStorage.getItem(id)) {
+                          values.push(1);
+                      } else {
+                          values.push(0);
+                      }
+                  }
+              })
+          return values;
+      }
+  
+      /**
+       * Append a pre element to the body containing the given message
+       * as its text node. Used to display the results of the API call.
+       *
+       * @param {string} message Text to be placed in pre element.
+       */
+      function log(message) {
+        var pre = document.getElementById('log');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+      }
+  
 </script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+
+</body>
+
+</html>
