@@ -66,10 +66,16 @@ body {
             .style("stroke", "black")
             .style("fill", function (d) { return d.data.color; })
             .attr("id", function (d) { return d.data.id; })
+            .each(function (d) {
+                if (localStorage.getItem(d.data.id)) {
+                    d3.select(this.parentNode).classed("selected", true);
+                }
+            })
             .on("click", function() {
                 var selected = d3.select(this.parentNode).classed("selected");
                 selected = !selected;
                 d3.select(this.parentNode).classed("selected", selected);
+                localStorage.setItem(d3.select(this).attr('id'), selected);
             });
 
         // Populate the <text> elements with our data-driven titles.
