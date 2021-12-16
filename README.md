@@ -1,6 +1,6 @@
 # Feel Wheel
 
-## Beta: Recording Google spreadsheet
+## Beta: Recording to Google spreadsheet
 
 The alternative page https://feel.metareflection.club/rec.html enables recording to a dedicated Google spreadsheet.
 [Email me](mailto:namin@alum.mit.edu) if you'd like to be added as a tester.
