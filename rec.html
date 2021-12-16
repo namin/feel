@@ -21,9 +21,9 @@ body {
   <button id="signout_button" style="display: none;">Sign out</button>
   <button id="set_button" style="display: none;">Set</button>
   <button id="record_button" style="display: none;">Record</button>
+  <div id="say"></div>
   <pre id="log" style="white-space: pre-wrap;"></pre>
   <svg></svg>
-
 <script>
 
     // Variables
@@ -255,7 +255,11 @@ body {
               }
           });
       }
-  
+
+      function spreadsheelUrl(spreadsheetId) {
+          return 'https://docs.google.com/spreadsheets/d/'+spreadsheetId+'/edit#gid=0';
+      }
+ 
       function insertRows(spreadsheetId, values) {
           gapi.client.sheets.spreadsheets.values.append({
               spreadsheetId: spreadsheetId,
@@ -267,6 +271,7 @@ body {
               majorDimension: 'ROWS',
               values: values
           }).then((response) => {
+              say('recorded on '+values[values.length-1][0]+' to <a href="'+spreadsheelUrl(spreadsheetId)+'" target="_blank">spreadsheet</a>')
           }, function(error) {
               if (error.result.error.code == 404) {
                   log('spreadsheet not found!')
@@ -319,7 +324,11 @@ body {
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
-  
+
+      function say(message) {
+          document.getElementById('say').innerHTML = message;
+     }
+
 </script>
 
     <script async defer src="https://apis.google.com/js/api.js"
