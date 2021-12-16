@@ -1,5 +1,9 @@
 # Feel Wheel
 
+An app to explore and select your feelings.
+
+This app is a single HTML file!
+
 ## Beta: Recording to Google spreadsheet
 
 The alternative page https://feel.metareflection.club/rec.html enables recording to a dedicated Google spreadsheet.
