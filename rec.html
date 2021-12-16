@@ -122,11 +122,11 @@ body {
       var API_KEY = 'AIzaSyCl2kEvCB66YADUGvGi5DFbJ7bPcbbS1aQ';
 
       // Array of API discovery doc URLs for APIs used
-      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest", "https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
       // Authorization scopes required by the API; multiple scopes can be
       // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/drive.file";
+      var SCOPES = "https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file";
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
@@ -175,7 +175,7 @@ body {
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'inline-block';
-          setButton.style.display = 'inline-block';
+          //setButton.style.display = 'inline-block';
           recordButton.style.display = 'inline-block';
           var auth2 = gapi.auth2.getAuthInstance();
           var profile = auth2.currentUser.get().getBasicProfile();
@@ -183,7 +183,7 @@ body {
         } else {
           authorizeButton.style.display = 'inline-block';
           signoutButton.style.display = 'none';
-          setButton.style.display = 'none';
+          //setButton.style.display = 'none';
           recordButton.style.display = 'none';
           email = undefined;  
         }
@@ -204,12 +204,6 @@ body {
       }
 
       function handleSetClick(event) {
-          let key = email+'/spreadsheetId';
-          let newId = prompt('Google spreadsheet id', localStorage.getItem(key));
-          if (newId == null || newId == '') {
-          } else {
-              localStorage.setItem(key, newId);
-          }
       }
 
       function handleRecordClick(event) {
@@ -217,22 +211,49 @@ body {
       }
 
       function record() {
-          var key = email+'/spreadsheetId';
-          var spreadsheetId = localStorage.getItem(key);
-          if (spreadsheetId) {
-              insertRows(spreadsheetId, [listState()])
-          } else {
-              // TODO: consider asking the user to input a spreadsheetId, optionally -- perhaps using hash?
-              gapi.client.sheets.spreadsheets.create({
-                  properties: {
-                      title: "feel.metareflection.club"
-                  }
-              }).then((response) => {
-                  spreadsheetId = response.result.spreadsheetId;
-                  localStorage.setItem(key, spreadsheetId);
-                  insertRows(spreadsheetId, [listHeader(), listState()])
-              })
-          }
+          gapi.client.drive.files.list({
+              q: 'name="spreadsheet.json"',
+              spaces: 'appDataFolder',
+              fields: 'files(id)'
+          }).then(function (response) {
+              if (!response.result.files || response.result.files.length == 0) {
+                  gapi.client.sheets.spreadsheets.create({
+                      properties: {
+                          title: "feel.metareflection.club"
+                      }
+                  }).then((response) => {
+                      var spreadsheetId = response.result.spreadsheetId;
+                      gapi.client.drive.files.create({
+                          resource: {
+                              name: 'spreadsheet.json',
+                              parents: ['appDataFolder']
+                          },
+                          fields: 'id'
+                      }).then(function (response) {
+                          var fileId = response.result.id;
+                          gapi.client.request({
+                              path: '/upload/drive/v3/files/' + fileId,
+                              method: 'PATCH',
+                              params: {
+                                  uploadType: 'media'
+                              },
+                              body: JSON.stringify({spreadsheetId: spreadsheetId})
+                          }).then(function (response) {
+                              insertRows(spreadsheetId, [listHeader(), listState()])
+                          });
+                      })
+                  })
+              } else {
+                  var fileId = response.result.files[0].id;
+                  gapi.client.drive.files.get({
+                      fileId: fileId,
+                      alt: 'media'
+                  }).then(function (response) {
+                      var spreadsheetId = response.result.spreadsheetId;
+                      insertRows(spreadsheetId, [listState()])
+                  });
+              }
+          });
       }
   
       function insertRows(spreadsheetId, values) {
@@ -248,8 +269,7 @@ body {
           }).then((response) => {
           }, function(error) {
               if (error.result.error.code == 404) {
-                  log('spreadsheet not found, creating anew ...')
-                  localStorage.removeItem(email+'/spreadsheetId');
+                  log('spreadsheet not found!')
                   record();
               } else {
                   log('insertRow('+spreadsheetId+', ...)');
