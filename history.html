@@ -19,6 +19,7 @@ body {
   <h1>The Feeling Wheel</h1>
   <button id="authorize_button" style="display: none;">Sign in</button>
   <button id="signout_button" style="display: none;">Sign out</button>
+  <button id="history_button" style="display: none;">History</button>
   <button id="set_button" style="display: none;">Set</button>
   <button id="record_button" style="display: none;">Record</button>
   <div id="say"></div>
@@ -60,6 +61,7 @@ body {
             .outerRadius(function (d) { return d.depth == 0 ? 0 : d.depth * bandSize });
 
 
+        dataClasses = {}
         // Add a <g> element for each node in thd data, then append <path> elements and draw lines based on the arc
         // variable calculations. Last, color the lines and the slices.
         g.selectAll('g')
@@ -74,6 +76,7 @@ body {
                 if (localStorage.getItem(d.data.id) == 'true') {
                     d3.select(this.parentNode).classed("selected", true);
                 }
+                dataClasses[d.data.id] = d3.select(this.parentNode);
             })
             .on("click", function() {
                 var selected = d3.select(this.parentNode).classed("selected");
@@ -130,6 +133,7 @@ body {
 
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
+      var historyButton = document.getElementById('history_button');
       var setButton = document.getElementById('set_button');
       var recordButton = document.getElementById('record_button');
 
@@ -158,6 +162,7 @@ body {
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
           authorizeButton.onclick = handleAuthClick;
           signoutButton.onclick = handleSignoutClick;
+          historyButton.onclick = handleHistoryClick;
           setButton.onclick = handleSetClick;
           recordButton.onclick = handleRecordClick;
         }, function(error) {
@@ -175,7 +180,8 @@ body {
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'inline-block';
-          //setButton.style.display = 'inline-block';
+          historyButton.style.display = 'inline-block';
+          setButton.style.display = 'inline-block';
           recordButton.style.display = 'inline-block';
           var auth2 = gapi.auth2.getAuthInstance();
           var profile = auth2.currentUser.get().getBasicProfile();
@@ -183,7 +189,8 @@ body {
         } else {
           authorizeButton.style.display = 'inline-block';
           signoutButton.style.display = 'none';
-          //setButton.style.display = 'none';
+          historyButton.style.display = 'none';
+          setButton.style.display = 'none';
           recordButton.style.display = 'none';
           email = undefined;  
         }
@@ -203,7 +210,38 @@ body {
         gapi.auth2.getAuthInstance().signOut();
       }
 
+      var past = [];
+      function handleHistoryClick(event) {
+          var spreadsheetId = '1x6EbOm_QThPRA3fH7OMm0lZeZcbwxOxSDsOEepgh0gI';
+          gapi.client.sheets.spreadsheets.values.get({
+              spreadsheetId: spreadsheetId,
+              range: 'Sheet1',
+          }).then(function(response) {
+              var range = response.result;
+              for (var i=1; i<range.values.length; i++) {
+                  log(range.values[i][0] + " -- " + i);
+              }
+              past = range.values;
+          }, function(response) {
+              log('Error: ' + response.result.error.message);
+          });
+      }
+
       function handleSetClick(event) {
+          var row = prompt("history index", past.length-1);
+          if (row == null || row == '') {
+          } else {
+              log('index '+row);
+              for (var j=2; j<past[0].length; j++) {
+                  var id = past[0][j];
+                  var selected = past[row][j] > 0;
+                  if (selected) {
+                      log(id);
+                  }
+                  localStorage.setItem(id, selected ? 'true' : 'false');
+                  dataClasses[id].classed("selected", selected);
+              }
+          }
       }
 
       function handleRecordClick(event) {
