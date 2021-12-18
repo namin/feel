@@ -211,6 +211,7 @@ body {
       }
 
       function record() {
+          say('recording in progress...');
           gapi.client.drive.files.list({
               q: 'name="spreadsheet.json"',
               spaces: 'appDataFolder',
