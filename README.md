@@ -4,6 +4,10 @@ An app to explore and select your feelings.
 
 This app is a single HTML file!
 
+## Archived
+
+Please see [namin/feel2](https://github.com/namin/feel/) for the next version.
+
 ## Beta: Recording to Google spreadsheet
 
 The alternative page https://feel.metareflection.club/rec.html enables recording to a dedicated Google spreadsheet.
